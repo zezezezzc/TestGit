@@ -1,21 +1,10 @@
-﻿#pragma once
+#include <iostream>
 #include <winsock2.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <stdio.h>
-#pragma comment(lib, "WS2_32")	//链接到WS2_32.lib
+#include <thread>
+#pragma comment(lib,"ws2_32.lib")
+#pragma warning(disable:4996)
 
-class CInitSock{
-	public:
-		CInitSock(BYTE minorVer = 2, BYTE majorVer = 2){
-			// 初始化WS2_32.dll
-			WSADATA wsaData;
-			WORD sockVersion = MAKEWORD(minorVer, majorVer);
-			if (::WSAStartup(sockVersion, &wsaData) != 0){
-				exit(0);
-			}
-		}
-		~CInitSock(){
-			::WSACleanup();
-		}
-};
+void initialization();
+bool Login(SOCKET s);
+DWORD WINAPI CreateSendMegThread(LPVOID lpParameter);
+DWORD WINAPI CreateRecvMegThread(LPVOID lpParameter);
